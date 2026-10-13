@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Inventário 10/10 · WMS × Sisrave</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#F3F5F7;--card:#fff;--ink:#14263A;--mut:#5D6B7A;--line:#DDE3E9;--ok:#0F8B8D;--bad:#C8453B;--warn:#D99A00;--navy:#1F3A5A}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0F1A26;--card:#17273A;--ink:#E8EEF4;--mut:#93A4B6;--line:#2A3D52;--ok:#2BB3B5;--bad:#E8695E;--warn:#F0B72F;--navy:#6FA0D6}}
+:root[data-theme="dark"]{--bg:#0F1A26;--card:#17273A;--ink:#E8EEF4;--mut:#93A4B6;--line:#2A3D52;--ok:#2BB3B5;--bad:#E8695E;--warn:#F0B72F;--navy:#6FA0D6}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:400 15px/1.45 'IBM Plex Sans',system-ui,-apple-system,Segoe UI,sans-serif;font-variant-numeric:tabular-nums}
+main{max-width:1100px;margin:0 auto;padding:20px 16px 40px}
+h1{font-size:24px;font-weight:600;margin:0}h2{font-size:17px;font-weight:600;margin:28px 0 10px}
+.sub{color:var(--mut);margin:4px 0 0}
+.grid{display:grid;gap:12px}.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}.g3{grid-template-columns:repeat(3,1fr)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px}
+.card h3{margin:0 0 12px;font-size:15px;font-weight:600}
+.k{border-left:3px solid var(--navy);padding-left:10px}.k b{display:block;font-size:26px;font-weight:600;line-height:1.1}.k span{color:var(--mut);font-size:13px}
+.k.bad{border-color:var(--bad)}.k.bad b{color:var(--bad)}.k.ok{border-color:var(--ok)}
+.bar{display:flex;height:22px;border-radius:5px;overflow:hidden;background:var(--line)}.bar i{display:block;height:100%}
+.leg{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:8px;font-size:13px;color:var(--mut)}.leg u{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;text-decoration:none}
+.row{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px solid var(--line)}.row:last-child{border:0}.row span{color:var(--mut)}
+.tw{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:7px 8px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+th{font-weight:500;color:var(--mut);font-size:13px}th:first-child,td:first-child,td.l,th.l{text-align:left}
+.mb{display:inline-block;height:8px;border-radius:4px;vertical-align:middle;margin-right:6px}
+.neg{color:var(--bad)}.pos{color:var(--warn)}.note{color:var(--mut);font-size:13px;margin-top:10px}
+@media(max-width:560px){.g3{grid-template-columns:1fr}}
+</style></head><body><main>
+<h1>Inventário 10/10 — WMS × Sisrave</h1>
+<p class="sub">Contagem do WMS comparada ao estoque do Sisrave</p>
+<div id="app"></div>
+</main>
+<script>
+const D={"w_itens": 4468, "w_unicos": 4423, "w_div": 158, "w_ok": 4310, "e_itens": 4842, "e_nc": 491, "e_ct": 4351, "so_wms": 72, "so_sis": 491, "ambos": 4351, "sal": 66561, "sal_nc": 3737, "sal_ct": 62824, "igual": 4274, "multi": 45, "falta": 54, "sobra": 104, "un_falta": 229, "un_sobra": 1016, "cont_un": 64066, "erp_un": 63279, "ruas": [["1", 133, 0, 1, 0], ["2", 207, 0, 395, 3], ["3", 376, 2, 322, 29], ["4", 545, 0, 440, 35], ["5", 584, 21, 229, 7], ["6", 469, 33, 607, 61], ["7", 107, 0, 381, 26], ["8", 266, 1, 891, 221], ["9", 257, 0, 232, 5], ["10", 319, 20, 417, 16], ["11", 339, 27, 73, 7], ["12", 346, 6, 168, 5], ["13", 71, 3, 26, 1], ["17", 423, 40, 0, 0], ["18", 26, 5, 0, 0], ["202", 0, 0, 1, 0], ["1301", 0, 0, 1, 0], ["?", 0, 0, 658, 75]], "top_div": [["LL000125920", "8E6358 PINO S/ TRAVA P/ UNHA 320C/L GET", 356, 712, 356, "3"], ["LL000126878", "P020P TRAVA GET", 108, 216, 108, "3"], ["LL000085428", "6Y7953 DISCO SIST.GIRA CIRCULO CAT UNITEC", 0, 50, 50, "11"], ["LL000073628", "5P2817 MANGUEIRA POR CM BENFLEX", 50, 1, -49, "5"], ["LL000127892", "2J3506 PORCA SEXTAVADA 3/4\" R.G. XLT IMPOR", 0, 49, 49, "13"], ["LL000045329", "2P1262 GUIA DE VÁLVULA NACIONAL", 100, 60, -40, "6"], ["LL000125128", "45020403 DISCO SYN", 0, 24, 24, "17"], ["LL000035988", "2385291 DISCO DE FREIO UNITEC", 0, 24, 24, "11"], ["LL000022847", "1838173 GUIA VÁLVULA DE EXAUSTÃO IMPORT-UN", 0, 24, 24, "17"], ["LL000123626", "172981 BUCHA DE BRONZE ITALBRONZE", 1, 25, 24, "12"]], "top_nc": [["LL000125916", "PINO DA UNHA DA 416 C/D", "LL-2O3", 464], ["LL000064036", "PARAFUSO LAM. 5/8\"X3\" R.G.", "LL-3I1", 397], ["LL000006702", "PARAFUSO MED. 3/8   X 1.3/4", "LL-8MG11", 171], ["LL000044336", "PORCA SEX. 7/8\" R.G.", "LL-3I1", 131], ["LL000111764", "ESPAÇADOR", "LL-3C3", 118], ["LL000101320", "SELO CAT ( AMARELO )", "LL-8MG11", 109], ["LL000026552", "ANEL MICHIGAN(13/16X1/8\")", "LL-P8C33", 95], ["LL000068325", "PONTA PEN PLUS A110", "LL-PC", 80], ["LL000064866", "ANEL NITRILICO", "LL-P8A8", 60], ["LL000068314", "PONTA PENETRACAO PLUS SD", "LL-P4", 57]]};
+const n=v=>v.toLocaleString('pt-BR'),p=(a,b,d=1)=>(100*a/b).toLocaleString('pt-BR',{minimumFractionDigits:d,maximumFractionDigits:d})+'%';
+const K=(v,l,c='')=>`<div class="k ${c}"><b>${v}</b><span>${l}</span></div>`;
+const R=(l,v)=>`<div class="row"><span>${l}</span><b>${v}</b></div>`;
+const seg=(a)=>`<div class="bar">${a.map(x=>`<i style="width:${x[0]}%;background:${x[1]}"></i>`).join('')}</div>`;
+const pc=(a,t)=>100*a/t;
+const maxD=Math.max(...D.ruas.map(r=>r[1]?r[2]/r[1]:0)),maxN=Math.max(...D.ruas.map(r=>r[3]?r[4]/r[3]:0));
+const cov=D.sal_ct/D.sal;
+document.getElementById('app').innerHTML=`
+<h2>Resumo por planilha</h2>
+<div class="grid g2">
+ <div class="card"><h3>Aba Contagem (WMS)</h3><div class="grid g3">${K(n(D.w_itens),'itens contados')}${K(n(D.w_div),'itens com divergência','bad')}${K(p(D.w_div,D.w_itens,2),'% de divergência','bad')}</div>
+ <div style="margin-top:14px">${seg([[pc(D.w_ok,D.w_itens),'var(--ok)'],[pc(D.w_div,D.w_itens),'var(--bad)']])}<div class="leg"><span><u style="background:var(--ok)"></u>OK ${n(D.w_ok)}</span><span><u style="background:var(--bad)"></u>Divergente ${n(D.w_div)}</span></div></div></div>
+ <div class="card"><h3>Aba Estoque (Sisrave)</h3><div class="grid g3">${K(n(D.e_itens),'itens em estoque')}${K(n(D.e_nc),'itens não contados','bad')}${K(p(D.e_nc,D.e_itens,2),'% de não contados','bad')}</div>
+ <div style="margin-top:14px">${seg([[pc(D.e_ct,D.e_itens),'var(--ok)'],[pc(D.e_nc,D.e_itens),'var(--bad)']])}<div class="leg"><span><u style="background:var(--ok)"></u>Contado ${n(D.e_ct)}</span><span><u style="background:var(--bad)"></u>Não contado ${n(D.e_nc)}</span></div></div></div>
+</div>
+<h2>Comparativo WMS × Sisrave</h2>
+<div class="grid g2">
+ <div class="card"><h3>Itens</h3>${R('Itens no estoque (Sisrave)',n(D.e_itens))}${R('Itens contados no WMS (linhas)',n(D.w_itens))}${R('Códigos únicos no WMS',n(D.w_unicos))}${R('Contados e presentes nos dois',n(D.ambos)+' ('+p(D.ambos,D.e_itens)+' do estoque)')}${R('Só no Sisrave (não contados)',n(D.so_sis))}${R('Só no WMS (fora da lista do Sisrave)',n(D.so_wms))}</div>
+ <div class="card"><h3>Unidades</h3>${R('Saldo total no Sisrave',n(D.sal)+' un')}${R('Saldo já contado',n(D.sal_ct)+' un')}${R('Saldo ainda sem contagem',n(D.sal_nc)+' un')}${R('Cobertura do inventário (unid.)',p(D.sal_ct,D.sal))}${R('Cobertura do inventário (itens)',p(D.e_ct,D.e_itens))}${R('Saldo Sisrave = estoque ERP do WMS',n(D.igual)+' de '+n(D.ambos)+' ('+p(D.igual,D.ambos)+')')}</div>
+</div>
+<h2>Divergências da contagem</h2>
+<div class="grid g2"><div class="card"><div class="grid g3">${K(n(D.falta),'itens com falta','bad')}${K(n(D.sobra),'itens com sobra')}${K((D.un_sobra-D.un_falta>0?'+':'')+n(D.un_sobra-D.un_falta),'saldo líquido (un)')}</div>
+${seg([[pc(D.un_falta,D.un_falta+D.un_sobra),'var(--bad)'],[pc(D.un_sobra,D.un_falta+D.un_sobra),'var(--warn)']])}<div class="leg"><span><u style="background:var(--bad)"></u>Faltas −${n(D.un_falta)} un</span><span><u style="background:var(--warn)"></u>Sobras +${n(D.un_sobra)} un</span></div>
+<p class="note">Divergência = contagem diferente do estoque ERP do WMS. Total absoluto de ajuste: ${n(D.un_falta+D.un_sobra)} un. ${n(D.multi)} códigos aparecem em mais de um endereço.</p></div>
+<div class="card"><h3>Estoque ERP × contagem (WMS)</h3>${R('Estoque ERP',n(D.erp_un)+' un')}${R('Contagem',n(D.cont_un)+' un')}${R('Diferença',(D.cont_un-D.erp_un>0?'+':'')+n(D.cont_un-D.erp_un)+' un ('+p(Math.abs(D.cont_un-D.erp_un),D.erp_un,2)+')')}</div></div>
+<h2>Por rua</h2>
+<div class="card tw"><table><tr><th>Rua</th><th>Linhas WMS</th><th>Divergentes</th><th class="l">% diverg.</th><th>Itens Sisrave</th><th>Não contados</th><th class="l">% não contados</th></tr>
+${D.ruas.map(r=>{const a=r[1]?r[2]/r[1]:0,b=r[3]?r[4]/r[3]:0;return `<tr><td>${r[0]}</td><td>${n(r[1])}</td><td>${n(r[2])}</td><td class="l"><i class="mb" style="width:${60*a/maxD}px;background:var(--bad)"></i>${p(r[2],r[1])}</td><td>${n(r[3])}</td><td>${n(r[4])}</td><td class="l"><i class="mb" style="width:${60*b/maxN}px;background:var(--warn)"></i>${p(r[4],r[3])}</td></tr>`}).join('')}</table>
+<p class="note">Rua do Sisrave extraída da locação (ex.: LL-4C3 = rua 4).</p></div>
+<h2>Maiores divergências</h2>
+<div class="card tw"><table><tr><th class="l">Referência</th><th class="l">Produto</th><th>Rua</th><th>ERP</th><th>Contado</th><th>Dif.</th></tr>
+${D.top_div.map(r=>`<tr><td class="l">${r[0]}</td><td class="l">${r[1]}</td><td>${r[5]}</td><td>${n(r[2])}</td><td>${n(r[3])}</td><td class="${r[4]<0?'neg':'pos'}">${r[4]>0?'+':''}${n(r[4])}</td></tr>`).join('')}</table></div>
+<h2>Não contados com maior saldo</h2>
+<div class="card tw"><table><tr><th class="l">Referência</th><th class="l">Descrição</th><th>Locação</th><th>Saldo</th></tr>
+${D.top_nc.map(r=>`<tr><td class="l">${r[0]}</td><td class="l">${r[1]}</td><td>${r[2]}</td><td>${n(r[3])}</td></tr>`).join('')}</table></div>`;
+</script></body></html>
